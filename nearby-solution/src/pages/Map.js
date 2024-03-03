@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import markerPic from 'leaflet/dist/images/marker-icon.png';
 import { useState } from 'react';
-import SearchBar from './Searchbar';
+import SearchBar from '../components/Searchbar';
 import { MapContainer, TileLayer, useMap,Marker,Popup} from 'react-leaflet'
 const Map = () =>{
     let index=0;

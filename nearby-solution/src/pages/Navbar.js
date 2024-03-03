@@ -1,5 +1,4 @@
 // src/components/Navbar.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ const Navbar = () => {
           MyApp
         </Link>
         <div className="flex items-center">
-          <Link to="/login" 
+          <Link to="/sign-in" 
           className="text-white mr-4"
           >
             Login
