@@ -1,5 +1,6 @@
 const express=require('express');
 const User=require('../model/User');
+const jwt=require('jsonwebtoken');
 const bcrypt=require('bcrypt');
 
 const handleLogin= async (req,res)=>{
@@ -10,7 +11,31 @@ const handleLogin= async (req,res)=>{
         if(!user)return res.status('401').json({'message':'user is not registerd'});
         const match=await bcrypt.compare(password,user.password);
         if(match){
-            return res.sendStatus(200);
+           const accessToken=jwt.sign(
+            {
+                "username":username
+            },
+            process.env.ACCESS_SECRET,
+            {
+                expiresIn:'30s'
+            }
+           );
+           const refreshtoken=jwt.sign(
+            {
+                "username" : username
+            },
+            process.env.REFRESH_SECRET,
+            {
+                expiresIn:'1d'
+            }
+           );
+           user.refreshtoken=refreshtoken;
+           const result=await user.save();
+           res.cookie('jwt', refreshtoken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+           res.json({ accessToken });
+           console.log(refreshtoken);
+           
+
         }else{
             return res.sendStatus(401);
         }
