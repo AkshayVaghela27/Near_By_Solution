@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express=require('express');
 const app=express();
 const cors = require('cors');
@@ -12,9 +12,9 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/register',require('./routes/register'));
 
-// app.use('/auth',require('./routes/auth'));
+app.use('/register',require('./routes/register'));
+app.use('/signin',require('./routes/auth'));
 app.listen(PORT,()=>{
-    console.log(URL);
+    console.log("server is runnning!!");
 });

@@ -3,9 +3,10 @@ const User=require('../model/User');
 
 const handleRegister= async (req,res)=>{
     const {username,password,email}=req.body;
-    if(!uname || !pwd || !email) return res.status(400).json({'message':"username , password and email is required!"});
+    console.log(username,password,email);
+    if(!username || !password || !email) return res.status(400).json({'message':"username , password and email is required!"});
 
-    const duplicate=User.findOne({username}).exec();
+    const duplicate=await User.findOne({username:username}).exec();
 
     if(duplicate)return res.sendStatus(409);
     try{
