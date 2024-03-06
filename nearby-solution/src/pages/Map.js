@@ -52,7 +52,11 @@ const Map = () =>{
     // };
     return(
         <>
-                {load?<><SearchBar 
+                {load?<>
+                    <div className='flex-col w-full'>
+                        <div className='flex justify-center'>
+                <div className='w-2/3'>
+                <SearchBar 
                 // markers={markers}
                 // setMarkers={setMarkers}
                 load={load}
@@ -62,12 +66,12 @@ const Map = () =>{
                 setLongitude={setLongitude}
                 setLatitude={setLatitude}
                 latitude={latitude}/>
-                    <MapContainer style={{height : '800px'}} center={[latitude, longitude]} zoom={13} scrollWheelZoom={true}>
+                    <MapContainer className='h-96 rounded-md border-4 border-blue-500' center={[latitude, longitude]} zoom={13} scrollWheelZoom={true}>
                     
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
+                        />
                     <Marker key={index} position={[latitude,longitude]} >
                     <Popup>
                         Marker {index + 1}
@@ -80,7 +84,11 @@ const Map = () =>{
                     </Popup>
                     </Marker>})} */}
                 
-                </MapContainer></>:<main>Loading...</main>}
+                </MapContainer>
+                </div>
+                </div>
+                </div>
+                </>:<main>Loading...</main>}
         </>
     );
 }
