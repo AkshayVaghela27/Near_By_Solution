@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 sticky  p-4">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-white text-xl font-bold">
+        <Link to="/" className="text-white text-2xl font-bold">
           NearbySolutions
         </Link>
         <div className="flex items-center">
