@@ -1,8 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ServiceCard from './serviceCard'; // Assuming ServiceCard is another component
+import connectionString from '../connectionString';
+import { toast } from 'react-toastify';
+
 
 const SearchService = () => {
+  const [long, setlong] = useState(0)
+  const [lat, setlat] = useState(0)
+
+  useEffect(()=>{
+    const Caliber=(e)=>{
+        // console.log("asdf");
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((x)=>{
+                // long=x.coords.longitude;
+                setlong(x.coords.longitude)
+                // lat=x.coords.latitude;
+                setlat(x.coords.latitude);
+                console.log(long)
+                console.log(lat)
+            })
+        }
+        else{
+            toast.error("Location services not supported by browser")
+        }
+
+    }
+    Caliber();
+  },[]);
+
   const [searchString, setSearchString] = useState('');
   const [serviceIds, setServiceIds] = useState([]);
   const [error, setError] = useState(null);
@@ -14,8 +41,11 @@ const SearchService = () => {
     }
 
     try {
-      const response = await axios.get(`/services?searchString=${encodeURIComponent(searchString)}`);
-      setServiceIds(response.data.serviceIds);
+      console.log(long);
+      const response = await axios.get(`${connectionString}services?searchString=${encodeURIComponent(searchString)}&long=${long}&lat=${lat}`);
+      setServiceIds(response.data);
+      debugger;
+      console.log(serviceIds)
       setError(null);
     } catch (error) {
       console.error('Error searching for services:', error);
@@ -41,9 +71,10 @@ const SearchService = () => {
       </div>
       {error && <p className="text-red-500 text-center">{error}</p>}
       <div className="grid justify-center bg-blue-600 rounded-md backdrop-blur-sm drop-shadow-2xl 2xl:grid-cols-3 grid-cols-1 md:grid-cols-2 py-4 px-8 gap-6">
-        <ServiceCard/>
+        
         {serviceIds.length > 0 ? (
-          serviceIds.map(serviceId => <ServiceCard key={serviceId} id={serviceId} />)
+          serviceIds.map(serviceId => <ServiceCard key={serviceId._id} id={serviceId._id} coordinates={serviceId.coordinates} />)
+          
         ) : (
           <p className="text-white text-center">Nothing to show here.</p>
         )}

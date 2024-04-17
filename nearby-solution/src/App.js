@@ -19,6 +19,7 @@ import UpdateLocation from "./components/serviceProvider/updateLocation";
 import SearchService from './components/customer/searchService';
 import AddService from './components/serviceProvider/addService';
 import MapComponent from './components/customer/MapComponent';
+import MapMain from './components/customer/MapMain';
 
 function App() {
    const routeData={
@@ -5393,7 +5394,7 @@ function App() {
                   <Route path='updateLocation' element={<UpdateLocation/>}/>
                   <Route path="/map" element={<Map />} />
                   <Route path="/addService" element={<AddService />} />
-                  <Route path='/directions'   element={<MapComponent routeData={routeData}/>}/>
+                  <Route path='/directions'   element={<MapMain/>}/>
                 </Routes>
                 </div>
               </div>

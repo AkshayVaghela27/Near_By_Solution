@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import myImage from '../../images/myImage.jpg'; // Adjust the path to your image file
+import connectionString from '../connectionString';
+import { Link } from 'react-router-dom';
+import Login from '../../pages/Login';
 
 const ServiceCard = ({ id }) => {
   const [serviceDetails, setServiceDetails] = useState(null);
   const [distance, setDistance] = useState(null);
 
   useEffect(() => {
+    console.log('lksdf')
     const fetchServiceDetails = async () => {
       try {
         // Fetch additional details for the service using the provided ID
-        const response = await axios.get(`/api/services/${id}`);
+        const response = await axios.get(`${connectionString}api/services/${id}`);
         setServiceDetails(response.data);
 
         // Fetch distance between service and user
@@ -47,18 +51,23 @@ const ServiceCard = ({ id }) => {
               <p className="text-sm font-bold uppercase tracking-widest text-black">Category</p>
               <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.category}</p>
               <p className="text-sm font-bold uppercase tracking-widest text-black">Product name</p>
-              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.productName}</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.name}</p>
               <p className="text-sm font-bold uppercase tracking-widest text-black">Price</p>
               <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.price}</p>
               <p className="text-sm font-bold uppercase tracking-widest text-black">Rated for</p>
-              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.rating}</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.ratedFor}</p>
               <div className='flex justify-between justify-items-center'>
-                <span className='text-sm font-bold text-white'>{distance} away</span> <a href="#" className="inline-flex drop-shadow-2xl items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                <span className='text-sm font-bold text-white'>{distance} </span> <Link 
+                to ={{
+                  pathname: '/directions', // Specify the path to the Login page
+                  state: { props: serviceDetails.location.coordinates } // Pass props via the location state
+                }}
+                className="inline-flex drop-shadow-2xl items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                 Get directions
                 <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                 </svg>
-              </a>
+              </Link>
               </div>
             </>
           )}
