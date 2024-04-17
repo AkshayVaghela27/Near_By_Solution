@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import myImage from '../../images/myImage.jpg'; // Adjust the path to your image file
 
-const ServiceCard = () => {
+const ServiceCard = ({ id }) => {
+  const [serviceDetails, setServiceDetails] = useState(null);
+  const [distance, setDistance] = useState(null);
+
+  useEffect(() => {
+    const fetchServiceDetails = async () => {
+      try {
+        // Fetch additional details for the service using the provided ID
+        const response = await axios.get(`/api/services/${id}`);
+        setServiceDetails(response.data);
+
+        // Fetch distance between service and user
+        const distanceResponse = await axios.get(`https://api.distancematrix.ai/maps/api/distancematrix/json?origins=user_coordinates&destinations=${response.data.coordinates}&key=your_api_key`);
+        setDistance(distanceResponse.data.distance);
+      } catch (error) {
+        console.error('Error fetching service details:', error);
+      }
+    };
+
+    fetchServiceDetails();
+  }, [id]); // Fetch details when ID changes
+
   return (
     <div className=" bg-slate-300 rounded-xl drop-shadow-2xl justify-self-center w-full relative overflow-hidden">
       <a href="#" className="group relative block bg-black">
@@ -12,27 +34,34 @@ const ServiceCard = () => {
         />
 
         <div className="relative p-4 sm:p-6 lg:p-8">
-
-
-          <div className="mt-32 sm:mt-48 lg:mt-64">
-            <div
-              className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
-            >
-              <p className='text-sm font-bold uppercase tracking-widest text-black'>description</p>
-              <p className="text-sm text-white font-semibold">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis perferendis hic asperiores
-                quibusdam quidem voluptates doloremque reiciendis nostrum harum. Repudiandae?
-              </p>
-            </div>
-          </div>
-          <p className="text-sm font-bold uppercase tracking-widest text-black">Category</p>
-          <p className="text-xl font-bold text-white sm:text-2xl">Product name</p>
-          <div className='flex justify-between justify-items-center'><span className='text-sm font-bold text-white'>6kms away</span> <a href="#" className="inline-flex drop-shadow-2xl items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-            Get directions
-            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-            </svg>
-          </a></div>
+          {serviceDetails && (
+            <>
+              <div className="mt-32 sm:mt-48 lg:mt-64">
+                <div
+                  className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                >
+                  <p className='text-sm font-bold uppercase tracking-widest text-black'>Description</p>
+                  <p className="text-sm text-white font-semibold">{serviceDetails.description}</p>
+                </div>
+              </div>
+              <p className="text-sm font-bold uppercase tracking-widest text-black">Category</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.category}</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-black">Product name</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.productName}</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-black">Price</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.price}</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-black">Rated for</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.rating}</p>
+              <div className='flex justify-between justify-items-center'>
+                <span className='text-sm font-bold text-white'>{distance} away</span> <a href="#" className="inline-flex drop-shadow-2xl items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                Get directions
+                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+              </a>
+              </div>
+            </>
+          )}
         </div>
       </a>
     </div>
