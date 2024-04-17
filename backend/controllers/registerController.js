@@ -2,9 +2,9 @@ const bcrypt=require('bcrypt');
 const User=require('../model/User');
 
 const handleRegister= async (req,res)=>{
-    const {username,password,email}=req.body;
+    const {username,password,email,role}=req.body;
     console.log(username,password,email);
-    if(!username || !password || !email) return res.status(400).json({'message':"username , password and email is required!"});
+    if(!username || !password || !email || !role) return res.status(400).json({'message':"username , password and email is required!"});
 
     const duplicate=await User.findOne({username:username}).exec();
 
@@ -14,7 +14,8 @@ const handleRegister= async (req,res)=>{
     const newUser=await User.create({
         "username" : username,
         "password" : hashedPwd,
-        "email" :email
+        "email" :email,
+        "role" : role
     });
 
     res.status(201).json({ 'success': `New user ${username} created!` });

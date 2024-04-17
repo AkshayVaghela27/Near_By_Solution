@@ -11,9 +11,14 @@ const userSchema =new Schema(
         password:{
             type: String,
             required:true
-        },email:{
+        },
+        email:{
              type:String,
              required:true
+        },
+        role:{
+            type: Boolean,
+           required : true
         },
         refreshtoken:String
     }
