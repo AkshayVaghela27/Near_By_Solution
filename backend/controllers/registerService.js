@@ -1,7 +1,7 @@
 const Service=require('../model/Service');
 
 const handleServiceRegister=async(req,res) => {
-    const {name,description,longitude,latitude,price,category,availability}=req.body;
+    const {name,description,longitude,latitude,price,category,availability,photo,ratedFor}=req.body;
 
     try{
     const newService=await Service.create({
@@ -13,7 +13,10 @@ const handleServiceRegister=async(req,res) => {
           },
           "price":price,
           "availability":availability,
-          "category":category
+          "category":category,
+
+          "ratedFor":ratedFor,
+          "photo":photo
     });
     res.status(201).json({ 'success': `New Bussines ${name} created!` });
 }catch (err) {

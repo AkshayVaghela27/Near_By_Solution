@@ -31,6 +31,14 @@ const serviceSchema = new mongoose.Schema({
    availability:{
     type:Boolean,
     required : true
+   },
+   ratedFor:{
+    type:String,
+    required:true
+   },
+   photo:{
+    type:String,
+    required:true
    }
 });
 
