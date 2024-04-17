@@ -4,7 +4,9 @@ const app=express();
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const dbConnect=require('./config/dbConnect');
-const PORT=process.env.PORT || 3500;
+const Service=require('./model/Service');
+const { ObjectId } = require('mongodb');
+// const PORT=process.env.PORT || 3001;
 
 
 //connecting to database
@@ -17,54 +19,74 @@ app.use('/signin',require('./routes/auth'));
 
 app.get('/services', async (req, res) => {
     const searchString = req.query.searchString;
-  
+    const longitude=req.query.long;
+    const latitude=req.query.lat;
     try {
-    //   const matchingServices = await Service.find({ name: { $regex: searchString, $options: 'i' } });
-    //   const serviceIds = matchingServices.map(service => service._id);
-    const serviceIds=[1,2];
-      res.json({ serviceIds });
-    } catch (error) {
-      console.error('Error searching for services:', error);
+      const result = await Service.aggregate([
+        {
+          $geoNear: {
+            near: {
+              type: 'Point',
+              coordinates: [parseFloat(longitude), parseFloat(latitude)] // Parse coordinates to float
+            },
+            distanceField: 'distance',
+            spherical: true,
+            key: 'location.coordinates'
+          }
+        },
+        {
+          $match: {
+            // name: { $eq: searchString } // Replace "Your_Name_Here" with the provided name
+             name: { $regex: searchString, $options: 'i' } 
+          }
+        },
+        {
+          $project: {
+            _id: 1,
+            coordinates: '$location.coordinates'
+          }
+        },
+        {
+          $sort: {
+            distance: 1
+          }
+        },
+        {
+          $project: {
+            _id: 1,
+            coordinates: 1
+          }
+        }
+      ]);
+      
+  
+      res.json(result);
+      console.log(result);
+    } catch (err) {
+      console.error('Error:', err.message);
       res.status(500).json({ error: 'Internal server error' });
     }
   });
   
-  const services = [
-    {
-      id: 1,
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      category: 'Category 1',
-      productName: 'Product 1',
-      price: 20,
-      rating: 4.5,
-      coordinates: '51.4994794,-0.1269979' // Coordinates for the service
-    },
-    {
-      id: 2,
-      description: 'Nulla facilisi. Mauris eleifend libero eget purus tristique, nec scelerisque nunc ullamcorper.',
-      category: 'Category 2',
-      productName: 'Product 2',
-      price: 30,
-      rating: 4.8,
-      coordinates: '51.4994794,-0.1269979' // Coordinates for the service
-    },
-    // Add more service data as needed
-  ];
-  
-  // Route handler to get service details by ID
-  app.get('/api/services/:id', (req, res) => {
-    const serviceId = parseInt(req.params.id);
-    const service = services.find(service => service.id === serviceId);
-    if (service) {
-      res.json(service);
-    } else {
-      res.status(404).json({ message: 'Service not found' });
-    }
-  });
+
+app.get('/api/services/:id', async (req, res) => {
+  const serviceId = new ObjectId(req.params.id);
+  try {
+      const service = await Service.findById(serviceId);
+      if (service) {
+          res.json(service);
+      } else {
+          res.status(404).json({ message: 'Service not found' });
+      }
+  } catch (error) {
+      console.error('Error finding service by id:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 
 app.use('/registerService',require('./routes/service'));
-app.listen(PORT,()=>{
+app.listen(3001,()=>{
     console.log("server is runnning!!");
 });
