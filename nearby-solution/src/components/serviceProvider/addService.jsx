@@ -122,7 +122,10 @@ const AddService = () => {
                             required
                         />
                     </div>
-                    
+                    <div className='mb-6'>
+                    <input type='checkbox' id="availibility"  required/>
+                    <label htmlFor='availibility' className='block text-gray-700 font-bold mb-2'>Available</label>
+                   </div> 
                    <div className='mb-6'>
                     <input type='checkbox' id="location" onClick={Caliber} required/>
                     <label htmlFor='location' className='block text-gray-700 font-bold mb-2'>Allow location</label>
