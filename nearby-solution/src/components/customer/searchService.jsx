@@ -44,8 +44,7 @@ const SearchService = () => {
       console.log(long);
       const response = await axios.get(`${connectionString}services?searchString=${encodeURIComponent(searchString)}&long=${long}&lat=${lat}`);
       setServiceIds(response.data);
-      debugger;
-      console.log(serviceIds)
+      // debuggers;
       setError(null);
     } catch (error) {
       console.error('Error searching for services:', error);
@@ -74,7 +73,6 @@ const SearchService = () => {
         
         {serviceIds.length > 0 ? (
           serviceIds.map(serviceId => <ServiceCard key={serviceId._id} id={serviceId._id} coordinates={serviceId.coordinates} />)
-          
         ) : (
           <p className="text-white text-center">Nothing to show here.</p>
         )}

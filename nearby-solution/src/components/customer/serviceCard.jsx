@@ -4,29 +4,33 @@ import myImage from '../../images/myImage.jpg'; // Adjust the path to your image
 import connectionString from '../connectionString';
 import { Link } from 'react-router-dom';
 import Login from '../../pages/Login';
-
+let myOb;
 const ServiceCard = ({ id }) => {
   const [serviceDetails, setServiceDetails] = useState(null);
   const [distance, setDistance] = useState(null);
 
   useEffect(() => {
-    console.log('lksdf')
+
     const fetchServiceDetails = async () => {
       try {
         // Fetch additional details for the service using the provided ID
         const response = await axios.get(`${connectionString}api/services/${id}`);
         setServiceDetails(response.data);
-
-        // Fetch distance between service and user
-        const distanceResponse = await axios.get(`https://api.distancematrix.ai/maps/api/distancematrix/json?origins=user_coordinates&destinations=${response.data.coordinates}&key=your_api_key`);
-        setDistance(distanceResponse.data.distance);
+        myOb=response.data.location.coordinates;
       } catch (error) {
         console.error('Error fetching service details:', error);
       }
     };
-
+    
     fetchServiceDetails();
+    // console.log(serviceDetails.location.coordinates)
+    // debugger;
   }, [id]); // Fetch details when ID changes
+  useEffect(() => {
+    if (serviceDetails) {
+      console.log(serviceDetails.location.coordinates);
+    }
+  }, [serviceDetails]);
 
   return (
     <div className=" bg-slate-300 rounded-xl drop-shadow-2xl justify-self-center w-full relative overflow-hidden">
@@ -57,11 +61,13 @@ const ServiceCard = ({ id }) => {
               <p className="text-sm font-bold uppercase tracking-widest text-black">Rated for</p>
               <p className="text-xl font-bold text-white sm:text-2xl">{serviceDetails.ratedFor}</p>
               <div className='flex justify-between justify-items-center'>
-                <span className='text-sm font-bold text-white'>{distance} </span> <Link 
-                to ={{
-                  pathname: '/directions', // Specify the path to the Login page
-                  state: { props: serviceDetails.location.coordinates } // Pass props via the location state
-                }}
+                <span className='text-sm font-bold text-white'>{distance} </span>
+                
+                 <Link 
+                
+                to ='/directions' 
+                state={{props: serviceDetails.location.coordinates}}
+
                 className="inline-flex drop-shadow-2xl items-center px-3 py-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                 Get directions
                 <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
