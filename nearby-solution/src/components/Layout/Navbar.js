@@ -12,14 +12,14 @@ const Navbar = () => {
         <div className="flex items-center">
           <ul className='flex flex-row'>
             <li >
-          <Link to="/sign-in" 
-          className="text-white hover:border-b-2 text-center hover:border-b-white  mr-4"
-          >
+          {!sessionStorage.getItem("token") && <Link to="/sign-in" 
+          className="text-white hover:border-b-2 text-center hover:border-b-white  mr-4">
             Login
-          </Link>
+          </Link>}
 
             </li>
             <li >
+
           <Link to="/about" className="text-white hover:border-b-2 text-center hover:border-b-white  mr-4">
             About
           </Link>

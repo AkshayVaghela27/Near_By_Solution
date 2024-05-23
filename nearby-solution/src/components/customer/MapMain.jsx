@@ -31,9 +31,11 @@ const MapMain = () => {
     async function fetchData() {
       try {
         const { long, lat } = await Caliber();
-        console.log(long, lat);
+        console.log(lat , long);
 
-        const url = `https://trueway-directions2.p.rapidapi.com/FindDrivingPath?origin=${lat}%2C${long}&destination=${props[1]}%2C${props[0]}`;
+        console.log(props[1], props[0]);
+
+        const url = `https://trueway-directions2.p.rapidapi.com/FindDrivingPath?origin=${lat}%2C${long}&destination=${props[0]}%2C${props[1]}`;
         const options = {
           method: 'GET',
           headers: {
@@ -50,6 +52,25 @@ const MapMain = () => {
       } catch (error) {
         toast.error("There was an error.");
       }
+
+//       const url = 'https://trueway-directions2.p.rapidapi.com/FindDrivingPath?origin=40.629041%2C-74.025606&destination=40.627177%2C-73.980853';
+// const options = {
+// 	method: 'GET',
+// 	headers: {
+// 		'X-RapidAPI-Key': '0e3471c4bcmsh74a7adb62786907p1672d8jsneff89e0cb003',
+// 		'X-RapidAPI-Host': 'trueway-directions2.p.rapidapi.com'
+// 	}
+// };
+
+// try {
+// 	const response = await fetch(url, options);
+// 	const result = await response.text();
+// 	console.log(result);
+//   const myData = await JSON.parse(result);
+//     setRouteCoordinates(myData.route.geometry.coordinates);
+// } catch (error) {
+// 	console.error(error);
+// }
     }
 
     fetchData();
