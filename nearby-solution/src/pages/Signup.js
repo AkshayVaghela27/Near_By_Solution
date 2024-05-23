@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import connectionString from "../components/connectionString";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Oauth from "../components/oauth";
 
@@ -46,7 +47,8 @@ export default function Signup() {
     try {
       setLoading(true);
       e.preventDefault();
-      const result = await fetch("http://localhost:3500/register", {
+      // console.log(JSON.stringify)
+      const result = await fetch(`${connectionString}register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,13 +64,13 @@ export default function Signup() {
         return;
       }
       handleCurrentUser(data);
-      navigate("/");
+      navigate("/sign-in");
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
   };
-  console.log(form);
+  // console.log(form);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -96,6 +98,7 @@ export default function Signup() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  onChange={handleChange}
                   required
                   fullWidth
                   id="firstName"
@@ -106,6 +109,8 @@ export default function Signup() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
+                  onChange={handleChange}
+
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -116,6 +121,8 @@ export default function Signup() {
               <Grid item xs={12}>
                 <TextField
                   required
+                  onChange={handleChange}
+
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -132,20 +139,23 @@ export default function Signup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleChange}
+
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign Up
             </Button>

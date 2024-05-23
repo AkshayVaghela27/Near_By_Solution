@@ -2,7 +2,7 @@ require('dotenv').config();
 const express=require('express');
 const app=express();
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions');
+const corsOptions  = require('./config/corsOptions');
 const dbConnect=require('./config/dbConnect');
 const Service=require('./model/Service');
 const { ObjectId } = require('mongodb');
@@ -67,7 +67,7 @@ app.get('/services', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
-  
+app.use('/logout',require('./routes/logout'));
 
 app.get('/api/services/:id', async (req, res) => {
   const serviceId = new ObjectId(req.params.id);

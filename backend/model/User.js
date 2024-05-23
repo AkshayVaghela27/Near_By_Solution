@@ -16,10 +16,7 @@ const userSchema =new Schema(
              type:String,
              required:true
         },
-        role:{
-            type: Boolean,
-           required : true
-        },
+      
         refreshtoken:String
     }
 );

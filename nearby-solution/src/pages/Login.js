@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 // import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import connectionString from './../components/connectionString'
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -44,25 +45,29 @@ export default function Login() {
     try {
       setLoading(true);
       e.preventDefault();
-      // const result = await fetch("http://localhost:3000/api/user/sign-in", {
+      
+      const result = await fetch(`${connectionString}signin`, {
 
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(form),
-      // });
-      // const data = await result.json();
-      // console.log(data);
-      // setError(false);
-      // if (data.success === false) {
-      //   setError(data.message);
-      //   console.log(data.message);
-      //   setLoading(false);
-      //   return;
-      // }
-      // handleCurrentUser(data);
-      navigate("/map");
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+      debugger;
+      const data = await result.json();
+      console.log(data);
+      // alert(" sadf")
+      sessionStorage.setItem('token',data.accessToken);
+      setError(false);
+      if (data.success === false) {
+        setError(data.message);
+        console.log(data.message);
+        setLoading(false);
+        return;
+      }
+      handleCurrentUser(data);
+      window.location.href="/"
     } 
     catch (error) {
       console.log(error);
@@ -70,6 +75,7 @@ export default function Login() {
     }
     setLoading(false);
   };
+  console.log(form)
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -87,7 +93,7 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" onClick={handleSubmit} variant="h5">
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -99,6 +105,7 @@ export default function Login() {
               id="email"
               label="Email Address"
               name="email"
+
               autoComplete="email"
               autoFocus
             />
@@ -113,10 +120,10 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               disabled={isLoading}
               type="submit"
