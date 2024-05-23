@@ -28,21 +28,24 @@ const ServiceCard = ({ id }) => {
   }, [id]); // Fetch details when ID changes
   useEffect(() => {
     if (serviceDetails) {
+      console.log(serviceDetails);
       console.log(serviceDetails.location.coordinates);
     }
   }, [serviceDetails]);
 
   return (
     <div className=" bg-slate-300 rounded-xl drop-shadow-2xl justify-self-center w-full relative overflow-hidden">
-      <a href="#" className="group relative block bg-black">
+       {serviceDetails && <a href="#" className="group relative block bg-black">
         <img
-          alt=""
-          src={myImage}
+          alt="image"
+          // src="https://firebasestorage.googleapis.com/v0/b/uplaodfile-749db.appspot.com/o/files%2Fpic1.jpg?alt=media&token=551245c7-6c83-4dce-8964-f579f6511546"
+          src={serviceDetails.photo}
+          // src={myImage}
           className="absolute inset-0 h-full  w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
         />
 
         <div className="relative p-4 sm:p-6 lg:p-8">
-          {serviceDetails && (
+          
             <>
               <div className="mt-32 sm:mt-48 lg:mt-64">
                 <div
@@ -76,9 +79,10 @@ const ServiceCard = ({ id }) => {
               </Link>
               </div>
             </>
-          )}
+          
         </div>
       </a>
+        }
     </div>
   )
 }

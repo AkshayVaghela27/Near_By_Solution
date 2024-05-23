@@ -54,7 +54,7 @@ export default function Login() {
         },
         body: JSON.stringify(form),
       });
-      debugger;
+      
       const data = await result.json();
       console.log(data);
       // alert(" sadf")

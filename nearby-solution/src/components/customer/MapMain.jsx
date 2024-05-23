@@ -11,19 +11,26 @@ const MapMain = () => {
   const location = useLocation();
   const { props } = location.state;
 
+  
   const Caliber = () => {
     return new Promise((resolve, reject) => {
       const successCallback = (position) => {
         const long = position.coords.longitude;
         const lat = position.coords.latitude;
+        console.log("new ", long , lat )
         resolve({ long, lat });
       };
-
+      
       const errorCallback = (error) => {
         reject(error);
       };
-
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+      
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+        enableHighAccuracy: true, // Request high accuracy if available
+        timeout: 10000, // Set a timeout of 10 seconds
+        maximumAge: 0, // Force the browser to get a fresh position
+      });
+      // navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     });
   };
 
@@ -45,11 +52,14 @@ const MapMain = () => {
         };
 
         const response = await fetch(url, options);
+        console.log(response)
         const result = await response.text();
         console.log(result);
         const myData = await JSON.parse(result);
+
         setRouteCoordinates(myData.route.geometry.coordinates);
       } catch (error) {
+        console.log(error)
         toast.error("There was an error.");
       }
 
