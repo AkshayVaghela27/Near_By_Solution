@@ -17,19 +17,19 @@ const SidebarService = () => {
                <span className="flex-1 ms-3 hover:text-blue-600 whitespace-nowrap">Add</span>
             </Link>
          </li>
-         <li data-tooltip-id='my-tooltip' data-tooltip-content="Edit service">
+         {/* <li data-tooltip-id='my-tooltip' data-tooltip-content="Edit service"> */}
             <Link to="/editService" className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-blue-100  group">
               <MdEditSquare className='flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-blue-600'/>
                <span className="flex-1 ms-3 hover:text-blue-600 whitespace-nowrap">Edit Service</span>
             </Link>
-         </li>
-         <li data-tooltip-id='my-tooltip' data-tooltip-content="Update address/location">
+         {/* </li> */}
+         {/* <li data-tooltip-id='my-tooltip' data-tooltip-content="Update address/location">
             <Link to="/updateLocation" className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-blue-100  group">
                <GrMapLocation className='flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-blue-600'/>
                
                <span className="flex-1 ms-3 hover:text-blue-600 whitespace-nowrap">Update Location</span>
             </Link>
-         </li>
+         </li> */}
          <li data-tooltip-id='my-tooltip' data-tooltip-content="Logout">
             <Link to="" className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-blue-100  group">
                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-blue-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
