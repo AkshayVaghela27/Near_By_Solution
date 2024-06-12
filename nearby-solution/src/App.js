@@ -20,6 +20,7 @@ import SearchService from './components/customer/searchService';
 import AddService from './components/serviceProvider/addService';
 import MapComponent from './components/customer/MapComponent';
 import MapMain from './components/customer/MapMain';
+import Feedback from './pages/Feedback';
 
 function App() {
  
@@ -46,6 +47,7 @@ function App() {
                   <Route path="/map" element={<Map />} />
                   <Route path="/addService" element={<AddService />} />
                   <Route path='/directions'   element={<MapMain/>}/>
+                  <Route path='/feedback'   element={<Feedback/>}/>
                 </Routes>
                 </div>
               </div>

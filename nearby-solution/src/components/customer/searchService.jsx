@@ -27,6 +27,7 @@ const SearchService = () => {
         }
 
     }
+    sessionStorage.removeItem('id');
     Caliber();
   },[]);
 

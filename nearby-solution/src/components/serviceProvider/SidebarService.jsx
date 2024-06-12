@@ -17,6 +17,7 @@ const SidebarService = () => {
       sessionStorage.clear();
       window.location.href="/"
    }
+
   return (
     <div>
       
@@ -48,7 +49,6 @@ const SidebarService = () => {
             </Link>
          </li>
 }
-       
       </ul>
    </div>
 </aside>

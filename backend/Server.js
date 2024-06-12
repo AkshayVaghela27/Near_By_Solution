@@ -87,6 +87,7 @@ app.get('/api/services/:id', async (req, res) => {
 
 
 app.use('/registerService',require('./routes/service'));
+app.use('/registerfeedback',require('./routes/feedbackregister'));
 app.listen(3001,()=>{
     console.log("server is runnning!!");
 });

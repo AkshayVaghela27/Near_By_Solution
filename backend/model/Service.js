@@ -41,5 +41,5 @@ const serviceSchema = new mongoose.Schema({
     required:true
    }
 });
-
+serviceSchema.index({location:'2dshere'});
 module.exports=mongoose.model('Service',serviceSchema);

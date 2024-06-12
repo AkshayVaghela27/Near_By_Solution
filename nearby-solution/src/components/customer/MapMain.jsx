@@ -9,7 +9,7 @@ const axios = require('axios');
 const MapMain = () => {
   const [routeCoordinates, setRouteCoordinates] = useState([]);
   const location = useLocation();
-  const { props } = location.state;
+  const { props} = location.state;
 
   
   const Caliber = () => {
@@ -35,8 +35,10 @@ const MapMain = () => {
   };
 
   useEffect(() => {
+    
     async function fetchData() {
       try {
+        
         const { long, lat } = await Caliber();
         console.log(lat , long);
 
@@ -46,7 +48,7 @@ const MapMain = () => {
         const options = {
           method: 'GET',
           headers: {
-            'X-RapidAPI-Key': '0e3471c4bcmsh74a7adb62786907p1672d8jsneff89e0cb003',
+            'X-RapidAPI-Key': 'c530f561a6mshb93872b7d4ee5cdp138f66jsn385768ab12b0',
             'X-RapidAPI-Host': 'trueway-directions2.p.rapidapi.com'
           }
         };
@@ -56,7 +58,7 @@ const MapMain = () => {
         const result = await response.text();
         console.log(result);
         const myData = await JSON.parse(result);
-
+        console.log(myData);
         setRouteCoordinates(myData.route.geometry.coordinates);
       } catch (error) {
         console.log(error)
@@ -83,6 +85,7 @@ const MapMain = () => {
 // }
     }
 
+    
     fetchData();
   }, []);
 
