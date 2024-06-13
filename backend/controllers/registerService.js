@@ -2,11 +2,12 @@ const Service=require('../model/Service');
 
 const handleServiceRegister=async(req,res) => {
     try{
-    const {name,description,longitude,latitude,price,category,availability,photo,ratedFor}=req.body;
+    const {name,user_id,description,longitude,latitude,price,category,availability,photo,ratedFor}=req.body;
 
     
     const newService=await Service.create({
         "name" : name,
+        "user_id":user_id,
         "description" : description,
         "location": {
             type: 'Point',

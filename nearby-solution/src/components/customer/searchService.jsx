@@ -5,7 +5,7 @@ import connectionString from '../connectionString';
 import { toast } from 'react-toastify';
 
 
-const SearchService = () => {
+const SearchService = () => {   
   const [long, setlong] = useState(0)
   const [lat, setlat] = useState(0)
 

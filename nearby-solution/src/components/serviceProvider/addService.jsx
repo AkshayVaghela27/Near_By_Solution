@@ -30,7 +30,7 @@ const AddService = () => {
         }
 
     }
-
+    const u_id=sessionStorage.getItem('u_id');
     const [serviceName, setServiceName] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
@@ -69,6 +69,7 @@ const AddService = () => {
             // Make POST request to backend API
             const response = await axios.post(`${connectionString}registerService`, {
                 name: serviceName,
+                user_id:u_id,
                 description: description,
                 photo: url,  // Ensure that the photo property is being correctly sent
                 category: category,

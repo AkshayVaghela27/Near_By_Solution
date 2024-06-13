@@ -21,6 +21,8 @@ import AddService from './components/serviceProvider/addService';
 import MapComponent from './components/customer/MapComponent';
 import MapMain from './components/customer/MapMain';
 import Feedback from './pages/Feedback';
+import Showfeedback from './pages/Showfeedback';
+import Allservices from './pages/Allservices';
 
 function App() {
  
@@ -48,6 +50,8 @@ function App() {
                   <Route path="/addService" element={<AddService />} />
                   <Route path='/directions'   element={<MapMain/>}/>
                   <Route path='/feedback'   element={<Feedback/>}/>
+                  <Route path='/showfeedback'   element={<Showfeedback/>}/>
+                  <Route path='/getallservices' element={<Allservices/>}/>
                 </Routes>
                 </div>
               </div>

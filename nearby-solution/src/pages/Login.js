@@ -59,6 +59,7 @@ export default function Login() {
       console.log(data);
       // alert(" sadf")
       sessionStorage.setItem('token',data.accessToken);
+      sessionStorage.setItem('u_id',data.id.toString())
       setError(false);
       if (data.success === false) {
         setError(data.message);
