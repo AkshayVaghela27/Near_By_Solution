@@ -9,6 +9,7 @@ const serviceSchema = new mongoose.Schema({
     type:String,
     required:true
    },
+   
    price:{
     type:Number,
     required : true
@@ -36,6 +37,14 @@ const serviceSchema = new mongoose.Schema({
     type:Boolean,
     required : true
    },
+   totalRating:{
+    type: Number,
+    default: 0
+   },
+   numberOfFeedbacks:{
+    type: Number,
+    default: 0
+   },
    ratedFor:{
     type:String,
     required:true
@@ -47,3 +56,4 @@ const serviceSchema = new mongoose.Schema({
 });
 serviceSchema.index({location:'2dshere'});
 module.exports=mongoose.model('Service',serviceSchema);
+// export default mongoose.model('Service',serviceSchema);

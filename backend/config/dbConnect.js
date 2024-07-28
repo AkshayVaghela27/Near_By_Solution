@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+// require('dotenv').config({ path: 'ENV_FILENAME' });
 
 const dbConnect=async()=>{
    try{
@@ -8,6 +8,7 @@ const dbConnect=async()=>{
        mongoose.connection.db.collection('services').createIndex({ "location.coordinates": "2dsphere" });
        console.log("connected to database!!");
    }catch(err){
+    // console.log("hll
     console.log(err);
    }
 }

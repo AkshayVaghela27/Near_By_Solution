@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import connectionString from '../connectionString';
+import { IoInformationCircleSharp } from "react-icons/io5";
 import { storage } from './firebase.js';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
@@ -103,8 +104,11 @@ const AddService = () => {
     
    
     return (
+        <>            
+        <h1 className='text-3xl  font-bold text-center bold'>Add new service/ product</h1>
         <div className="top-0 left-0 flex justify-center items-center">
             <div className="bg-gray-100 bg-opacity-100 rounded-lg p-8 w-3/6 shadow-2xl ">
+
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="serviceName" className="block text-gray-700 font-bold mb-2">Service Name:</label>
@@ -177,23 +181,29 @@ const AddService = () => {
                         />
                     </div>
                     <div className='mb-4'>
-                        <input 
-                            type='checkbox' 
-                            id="availibility"
-                            checked={availibility} // Set checked state to availibility
-                            onChange={() => setAvailibility(!availibility)} // Toggle availibility state
-                            required 
-                        />
-                        <label htmlFor='availibility' className='block text-gray-700 font-bold mb-2'>Available</label>
-                    </div> 
-                   <div className='mb-4'>
-                    <input type='checkbox' id="location" onClick={Caliber} required/>
-                    <label htmlFor='location' className='block text-gray-700 font-bold mb-2'>Allow location</label>
-                   </div>
-                    <button type="submit" className="bg-blue-600 text-white font-bold px-3 py-1 rounded hover:bg-blue-700">Add Service</button>
+  <input type='checkbox' id="availibility" checked={availibility} onChange={() => setAvailibility(!availibility)} required />
+  <label htmlFor='availibility' className='block text-gray-700 font-bold mb-2 flex items-center'>
+    Available 
+    <a data-tooltip-id="my-tooltip" data-tooltip-content="Kindly provide details about availibility">
+      <IoInformationCircleSharp className='ml-1' />
+    </a>
+  </label>
+</div>
+<div className='mb-4'>
+  <input type='checkbox' id="location" onClick={Caliber} required />
+  <label htmlFor='location' className='block text-gray-700 font-bold mb-2 flex items-center'>
+    Allow location 
+    <a data-tooltip-id="my-tooltip" data-tooltip-content="The location you are allowing must be your business location">
+      <IoInformationCircleSharp className='ml-1' />
+    </a>
+  </label>
+</div>
+                    <button type="submit" className="bg-blue-950 text-white font-bold px-3 py-1 rounded hover:bg-blue-700">Add Service</button>
                 </form>
             </div>
         </div>
+        </>
+
     );
 };
 

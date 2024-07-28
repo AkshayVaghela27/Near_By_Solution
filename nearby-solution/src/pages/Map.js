@@ -37,36 +37,15 @@ const Map = () =>{
         const handleSearch=(searchTerm)=>{
             console.log(searchTerm);
         }
-    //         var map = L.map('map').setView([51.505, -0.09], 13);
 
-    //         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    //         }).addTo(map);
-
-    //         L.marker([51.5, -0.09]).addTo(map)
-    //             .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-    //             .openPopup();
-    //                 },()=>{
-    //                     alert("can not get location!!");
-    //                 })
-    // };
     return(
         <>
                 {load?<>
                     <div className='flex-col w-full'>
                         <div className='flex justify-center'>
                 <div className='w-2/3'>
-                <SearchBar 
-                // markers={markers}
-                // setMarkers={setMarkers}
-                load={load}
-                setLoad={setLoad}
-                onSearch={handleSearch} 
-                longitude={longitude}
-                setLongitude={setLongitude}
-                setLatitude={setLatitude}
-                latitude={latitude}/>
-                    <MapContainer className='h-96 rounded-md border-4 border-blue-500' center={[latitude, longitude]} zoom={13} scrollWheelZoom={true}>
+         
+                    <MapContainer className='h-96 rounded-md border-4 border-blue-950' center={[latitude, longitude]} zoom={13} scrollWheelZoom={true}>
                     
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
