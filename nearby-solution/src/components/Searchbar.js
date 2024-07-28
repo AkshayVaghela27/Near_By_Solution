@@ -43,7 +43,7 @@ const SearchBar = ({ onSearch,latitude,longitude,setLatitude,setLongitude,load,s
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        className="bg-blue-950 text-white px-4 py-2 rounded-md ml-2 hover:bg-blue-950 focus:outline-none focus:ring focus:border-blue-300"
         onClick={handleSearch}
       >
         Search

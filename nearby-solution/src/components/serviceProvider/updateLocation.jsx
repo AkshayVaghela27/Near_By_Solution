@@ -41,7 +41,7 @@ const UpdateLocation = () => {
                     </div>
                     <a data-tooltip-id="my-tooltip" data-tooltip-content="You will need to provide location access">
   
-                    <button type="button" onClick={Caliber} className="bg-blue-600 text-white font-bold px-3 py-1 rounded hover:bg-blue-700">Caliber</button>
+                    <button type="button" onClick={Caliber} className="bg-blue-950 text-white font-bold px-3 py-1 rounded hover:bg-blue-700">Caliber</button>
 </a>
                 </form>
             </div>

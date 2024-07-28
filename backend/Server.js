@@ -6,7 +6,6 @@ const corsOptions  = require('./config/corsOptions');
 const dbConnect=require('./config/dbConnect');
 const Service=require('./model/Service');
 const { ObjectId } = require('mongodb');
-// const PORT=process.env.PORT || 3001;
 
 
 //connecting to database
@@ -15,60 +14,65 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/register',require('./routes/register'));
+
 app.use('/signin',require('./routes/auth'));
 
-app.get('/services', async (req, res) => {
-    const searchString = req.query.searchString;
-    const longitude=req.query.long;
-    const latitude=req.query.lat;
-    try {
-      const result = await Service.aggregate([
-        {
-          $geoNear: {
-            near: {
-              type: 'Point',
-              coordinates: [parseFloat(longitude), parseFloat(latitude)] // Parse coordinates to float
-            },
-            distanceField: 'distance',
-            spherical: true,
-            key: 'location.coordinates'
-          }
-        },
-        {
-          $match: {
-            // name: { $eq: searchString } // Replace "Your_Name_Here" with the provided name
-             name: { $regex: searchString, $options: 'i' } 
-          }
-        },
-        {
-          $project: {
-            _id: 1,
-            coordinates: '$location.coordinates'
-          }
-        },
-        {
-          $sort: {
-            distance: 1
-          }
-        },
-        {
-          $project: {
-            _id: 1,
-            coordinates: 1
-          }
-        }
-      ]);
-      
-  
-      res.json(result);
-      console.log(result);
-    } catch (err) {
-      console.error('Error:', err.message);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
-app.use('/logout',require('./routes/logout'));
+app.use('/storeFeedback', require('./routes/storeFeedback'));
 
+app.get('/services', async (req, res) => {
+  const searchString = req.query.searchString;
+  const longitude = parseFloat(req.query.long);
+  const latitude = parseFloat(req.query.lat);
+  const priceLow = parseInt(req.query.priceLow);
+  const priceHigh = parseInt(req.query.priceHigh);
+
+  try {
+    
+    
+    const result = await Service.aggregate([
+      {
+        $geoNear: {
+          near: { type: 'Point', coordinates: [longitude, latitude] },
+          distanceField: 'distance',
+          spherical: true,
+          key: 'location.coordinates'
+        }
+      },
+      {
+        $match: {
+          name: { $regex: searchString, $options: 'i' },
+          price: { $gte: priceLow, $lte: priceHigh }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          coordinates: '$location.coordinates',
+          name: 1,
+          price: 1,
+          distance: 1
+        }
+      },
+      {
+        $sort: {
+          distance: 1
+        }
+      }
+    ]);
+
+    res.json(result);
+    console.log(result); // Log the result to check if data is coming correctly
+
+  } catch (err) {
+    console.error('Error:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
+  } finally {
+    // await client.close()s;
+  }
+});
+
+app.use('/logout',require('./routes/logout'));
+// app.use('/community',require('./routes/community'))
 app.get('/api/services/:id', async (req, res) => {
   const serviceId = new ObjectId(req.params.id);
   try {
