@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ScholarshipContext } from "./../context/main";
+import { ScholarshipContext } from "../context/main";
 
 export default function Tags() {
   const { handlePost, globalPost } = useContext(ScholarshipContext);

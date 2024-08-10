@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import connectionString from '../connectionString';
+import connectionString from '../connectionString.jsx';
 import { IoInformationCircleSharp } from "react-icons/io5";
 import { storage } from './firebase.js';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";

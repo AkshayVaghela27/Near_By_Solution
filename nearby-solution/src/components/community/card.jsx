@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Answer from "./answer";
 import axios from "axios";
-import { ScholarshipContext } from "./../context/main";
+import { ScholarshipContext } from "../context/main";
 
 const Card = ({ user, question, answer, tags, id }) => {
   const [newAnswer, setNewAnswer] = useState(""); // State for the new answer

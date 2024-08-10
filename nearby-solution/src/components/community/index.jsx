@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import CommunityPage from "./community";
-import { ScholarshipContext } from "./../context/main";
+import { ScholarshipContext } from "../context/main";
 import {toast} from 'react-toastify';
 import axios from "axios";
 import Tags from "./tags";

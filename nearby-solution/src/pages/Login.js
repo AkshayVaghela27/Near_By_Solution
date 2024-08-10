@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 // import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import connectionString from './../components/connectionString'
+import connectionString from '../components/connectionString'
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
